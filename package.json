@@ -1,0 +1,67 @@
+{
+  "name": "ncreate",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.0.5",
+  "description": "some description...",
+  "author": "LU-JIEJIE",
+  "license": "MIT",
+  "homepage": "https://github.com/LU-JIEJIE/ncreate#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LU-JIEJIE/ncreate.git"
+  },
+  "bugs": "https://github.com/LU-JIEJIE/ncreate/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "lint": "eslint .",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "nr build",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.8.2",
+    "@types/node": "^20.11.27",
+    "bumpp": "^9.4.0",
+    "eslint": "^8.57.0",
+    "esno": "^4.7.0",
+    "lint-staged": "^15.2.2",
+    "simple-git-hooks": "^2.10.0",
+    "typescript": "^5.4.2",
+    "unbuild": "^2.0.0",
+    "vitest": "^0.34.6"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
