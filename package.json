@@ -2,7 +2,7 @@
   "name": "ncreate",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@9.0.5",
+  "packageManager": "pnpm@9.0.6",
   "description": "some description...",
   "author": "LU-JIEJIE",
   "license": "MIT",
