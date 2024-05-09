@@ -41,6 +41,7 @@
     "lint": "eslint .",
     "release": "bumpp && npm publish",
     "start": "esno src/index.ts",
+    "cli": "esno src/runner.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "nr build",
@@ -63,5 +64,11 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "dependencies": {
+    "execa": "^9.0.0",
+    "ky": "^1.2.4",
+    "picocolors": "^1.0.0",
+    "prompts-plus": "^3.0.3"
   }
 }
