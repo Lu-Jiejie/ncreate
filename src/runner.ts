@@ -1,8 +1,9 @@
 import process from 'node:process'
 import { DEBUG_SIGN } from './constants'
 import { remove } from './utils'
-import { printHelp, printVersion } from './printer'
+import { printError, printHelp, printVersion } from './printer'
 import { handlerNPM } from './handlers/npm'
+import { handlerGitHub } from './handlers/github'
 
 function run(args: string[]) {
   const debug = args.includes(DEBUG_SIGN)
@@ -23,22 +24,21 @@ function run(args: string[]) {
   }
 
   const templateName = args[0]
-  const destination = args[1] || ''
+  const destination = args[1] || '.'
 
   if (templateName.includes('/'))
-    console.log('Github Repo')
+    handlerGitHub(templateName, destination)
   else
     handlerNPM(templateName, destination)
 }
 
 function runCli() {
   const args = process.argv.slice(2).filter(Boolean)
-  try {
-    run(args)
-  }
-  catch (error) {
-    console.error(error)
-  }
+  run(args)
 }
 
 runCli()
+
+process.on('uncaughtException', (error) => {
+  printError(error.message)
+})

@@ -66,9 +66,10 @@
     "*": "eslint --fix"
   },
   "dependencies": {
-    "execa": "^9.0.0",
-    "ky": "^1.2.4",
+    "execa": "^9.0.2",
+    "https-proxy-agent": "^7.0.4",
     "picocolors": "^1.0.0",
-    "prompts-plus": "^3.0.3"
+    "prompts-plus": "^3.0.3",
+    "tar": "^7.1.0"
   }
 }

@@ -15,17 +15,10 @@ export async function handlerNPM(templateName: string, destination: string) {
       { title: 'bun', value: 'bun' }
     ]
   })
-  if (!agent) {
-    printError('No agent selected.')
-    return
-  }
+  if (!agent)
+    throw new Error('No agent selected')
 
   const command = `${agent} create ${templateName} ${destination}`.trim()
-  console.log(process.cwd())
-  try {
-    await execa(command, { stdio: 'inherit' })
-  }
-  catch (error: any) {
-    printError(error.message)
-  }
+
+  await execa(command, { stdio: 'inherit' })
 }
