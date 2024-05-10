@@ -35,6 +35,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "ncreate": "./bin/index.mjs"
+  },
   "scripts": {
     "dev": "unbuild --stub",
     "build": "unbuild",
@@ -69,6 +72,7 @@
     "execa": "^9.0.2",
     "https-proxy-agent": "^7.0.4",
     "picocolors": "^1.0.0",
+    "playground": "link:D:/CODE/mine/ncreate/playground",
     "prompts-plus": "^3.0.3",
     "tar": "^7.1.0"
   }

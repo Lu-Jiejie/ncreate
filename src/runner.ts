@@ -5,6 +5,11 @@ import { printError, printHelp, printVersion } from './printer'
 import { handlerNPM } from './handlers/npm'
 import { handlerGitHub } from './handlers/github'
 
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  printError(error.message)
+})
+
 function run(args: string[]) {
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
@@ -38,7 +43,3 @@ function runCli() {
 }
 
 runCli()
-
-process.on('uncaughtException', (error) => {
-  printError(error.message)
-})

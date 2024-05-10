@@ -17,6 +17,9 @@ importers:
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
+      playground:
+        specifier: link:D:/CODE/mine/ncreate/playground
+        version: link:playground
       prompts-plus:
         specifier: ^3.0.3
         version: 3.0.3
