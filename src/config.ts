@@ -12,8 +12,13 @@ export interface Config {
 let config: Config
 export async function getConfig() {
   if (!config) {
-    const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
-    config = rawConfig.default
+    try {
+      const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
+      config = rawConfig.default
+    }
+    catch (error) {
+      config = {}
+    }
   }
   return config
 }
