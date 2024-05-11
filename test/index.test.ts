@@ -30,7 +30,7 @@ describe('should work', () => {
     `)
   })
 
-  it.only('fetch refs', async () => {
+  it('fetch refs', async () => {
     interface RepoRef {
       type: string
       name: string

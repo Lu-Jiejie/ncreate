@@ -1,20 +1,16 @@
 import process from 'node:process'
-import { DEBUG_SIGN } from './constants'
-import { remove } from './utils'
 import { printError, printHelp, printVersion } from './printer'
 import { handlerNPM } from './handlers/npm'
 import { handlerGitHub } from './handlers/github'
+import { getConfig } from './config'
+import { handlerLocal } from './handlers/local'
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
   printError(error.message)
 })
 
-function run(args: string[]) {
-  const debug = args.includes(DEBUG_SIGN)
-  if (debug)
-    remove(args, DEBUG_SIGN)
-
+async function run(args: string[]) {
   if (args.length === 0)
     throw new Error('No Template Name Provided')
 
@@ -28,8 +24,18 @@ function run(args: string[]) {
     return
   }
 
+  const config = await getConfig()
+  const localTemplates = config.localTemplates || []
   const templateName = args[0]
   const destination = args[1] || '.'
+
+  // if local template
+  const localIndex = localTemplates.findIndex(template => template.name === templateName)
+  if (localIndex !== -1) {
+    const templatePath = localTemplates[localIndex].path
+    handlerLocal(templateName, templatePath, destination)
+    return
+  }
 
   if (templateName.includes('/'))
     handlerGitHub(templateName, destination)

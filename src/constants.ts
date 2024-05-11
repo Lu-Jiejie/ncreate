@@ -1,5 +1,5 @@
 import { homedir } from 'node:os'
-import { resolve } from 'node:path'
+import { join } from 'node:path'
 
-export const DEBUG_SIGN = '?'
-export const CACHE_DIR = resolve(homedir(), '.ncreate')
+export const CACHE_DIR = join(homedir(), '.ncreate')
+export const CONFIG_FILE_PATH = join(CACHE_DIR, 'config.json')

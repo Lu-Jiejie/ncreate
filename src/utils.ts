@@ -2,14 +2,6 @@ import https from 'node:https'
 import { createWriteStream } from 'node:fs'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 
-export function remove<T>(arr: T[], value: T) {
-  const index = arr.indexOf(value)
-  if (index !== -1)
-    arr.splice(index, 1)
-
-  return arr
-}
-
 export function fetchFile(url: string, path: string, options: { proxy?: string } = {}) {
   console.log(url, path)
   const agent = options.proxy ? new HttpsProxyAgent(options.proxy) : undefined
