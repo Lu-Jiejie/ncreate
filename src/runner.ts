@@ -27,7 +27,7 @@ async function run(args: string[]) {
   const config = await getConfig()
   const localTemplates = config.localTemplates || []
   const templateName = args[0]
-  const destination = args[1] || '.'
+  const destination = args[1]
 
   // if local template
   const localIndex = localTemplates.findIndex(template => template.name === templateName)

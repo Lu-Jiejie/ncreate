@@ -16,3 +16,7 @@ export function printError(errorMessage: string, errorType: string = 'ERROR') {
 export function printSuccess(message: string) {
   console.log(`${pc.inverse(pc.green(' SUCCESS '))} ${pc.green(message)}`)
 }
+
+export function printWarning(message: string) {
+  console.log(`${pc.inverse(pc.yellow(' WARNING '))} ${pc.yellow(message)}`)
+}

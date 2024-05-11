@@ -5,6 +5,7 @@ import { execaCommand } from 'execa'
 import * as tar from 'tar'
 import { CACHE_DIR } from '../constants'
 import { fetchFile } from '../utils'
+import { printSuccess } from '../printer'
 
 interface RepoInfo {
   author: string
@@ -101,7 +102,6 @@ async function getRepoTarball(repoInfo: RepoInfo, cacheDir: string) {
 
 function unpackRepoTarball(tarballFilePath: string, destination: string, tarballSubdir?: string) {
   mkdirSync(destination, { recursive: true })
-  console.log(tarballSubdir)
   return tar.extract({
     file: tarballFilePath,
     cwd: destination,
@@ -110,7 +110,10 @@ function unpackRepoTarball(tarballFilePath: string, destination: string, tarball
 }
 
 export async function handlerGitHub(templateName: string, destination: string) {
+  printSuccess(`Creating project from GitHub template: ${templateName}`)
   const repoInfo = parseRepoInfo(templateName)
   const { tarballFilePath, tarballSubdir } = await getRepoTarball(repoInfo, CACHE_DIR)
+  // if destination is not provided, use the subdir or repo name
+  destination = destination || repoInfo.subdir ? repoInfo.subdir.split('/').pop()! : repoInfo.repoName
   await unpackRepoTarball(tarballFilePath, destination, tarballSubdir)
 }

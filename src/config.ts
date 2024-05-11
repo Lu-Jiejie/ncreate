@@ -2,14 +2,18 @@ import { pathToFileURL } from 'node:url'
 import { CONFIG_FILE_PATH } from './constants'
 
 export interface Config {
+  agent?: string
   localTemplates?: {
     name: string
     path: string
   }[]
 }
 
+let config: Config
 export async function getConfig() {
-  const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
-  const config: Config = rawConfig.default
+  if (!config) {
+    const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
+    config = rawConfig.default
+  }
   return config
 }
