@@ -12,3 +12,7 @@ export function printHelp() {
 export function printError(errorMessage: string, errorType: string = 'ERROR') {
   console.log(`${pc.inverse(pc.red(` ${errorType} `))} ${pc.red(errorMessage)}`)
 }
+
+export function printSuccess(message: string) {
+  console.log(`${pc.inverse(pc.green(' SUCCESS '))} ${pc.green(message)}`)
+}

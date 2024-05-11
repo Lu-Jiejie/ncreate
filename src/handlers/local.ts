@@ -1,3 +1,5 @@
-export function handlerLocal(templateName: string, templatePath: string, destination: string) {
-  console.log('Local Template:', templateName, templatePath, destination)
+import { copyFolderFiles } from '../utils'
+
+export async function handlerLocal(templateName: string, templatePath: string, destination: string) {
+  await copyFolderFiles(templatePath, destination, ['.git', 'node_modules'])
 }
