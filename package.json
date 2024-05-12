@@ -2,7 +2,7 @@
   "name": "ncreate",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.1.0",
   "description": "some description...",
   "author": "LU-JIEJIE",
   "license": "MIT",
@@ -32,12 +32,12 @@
       ]
     }
   },
-  "files": [
-    "dist"
-  ],
   "bin": {
     "ncreate": "./bin/index.mjs"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "unbuild --stub",
     "build": "unbuild",
@@ -50,15 +50,23 @@
     "prepublishOnly": "nr build",
     "prepare": "simple-git-hooks"
   },
+  "dependencies": {
+    "execa": "^9.0.2",
+    "https-proxy-agent": "^7.0.4",
+    "picocolors": "^1.0.0",
+    "playground": "link:D:/CODE/mine/ncreate/playground",
+    "prompts-plus": "^3.0.4",
+    "tar": "^7.1.0"
+  },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.8.2",
-    "@types/node": "^20.11.27",
-    "bumpp": "^9.4.0",
+    "@antfu/eslint-config": "^2.17.0",
+    "@types/node": "^20.12.11",
+    "bumpp": "^9.4.1",
     "eslint": "^8.57.0",
     "esno": "^4.7.0",
     "lint-staged": "^15.2.2",
-    "simple-git-hooks": "^2.10.0",
-    "typescript": "^5.4.2",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.6"
   },
@@ -67,13 +75,5 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  },
-  "dependencies": {
-    "execa": "^9.0.2",
-    "https-proxy-agent": "^7.0.4",
-    "picocolors": "^1.0.0",
-    "playground": "link:D:/CODE/mine/ncreate/playground",
-    "prompts-plus": "^3.0.3",
-    "tar": "^7.1.0"
   }
 }
