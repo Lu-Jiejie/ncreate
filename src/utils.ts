@@ -74,7 +74,12 @@ export function copyDir(sourceDir: string, destinationDir: string, exclude: stri
 }
 
 export function isDirEmpty(dir: string) {
-  return readdirSync(dir).length === 0
+  try {
+    return readdirSync(dir).length === 0
+  }
+  catch (error) {
+    return true
+  }
 }
 
 export function timeDifference(from: number, to: number = Date.now()) {

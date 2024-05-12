@@ -114,13 +114,14 @@ function unpackRepoTarball(tarballFilePath: string, destinationDir: string, tarb
 export async function handlerGitHub(templateName: string, destinationDir: string, options: Options = defaultOptions) {
   printSuccess(`Creating project from GitHub template: ${templateName}`)
 
+  const repoInfo = parseRepoInfo(templateName)
+  // if destination is not provided, use the subdir or repo name
+  destinationDir = destinationDir || (repoInfo.subdir ? basename(repoInfo.subdir) : repoInfo.repoName)
+
   if (!isDirEmpty(destinationDir) && !options.force)
     throw new Error('Destination directory is not empty, use --force to override')
 
-  const repoInfo = parseRepoInfo(templateName)
   const { tarballFilePath, tarballSubdir } = await getRepoTarball(repoInfo, CACHE_DIR)
-  // if destination is not provided, use the subdir or repo name
-  destinationDir = destinationDir || (repoInfo.subdir ? basename(repoInfo.subdir) : repoInfo.repoName)
   await unpackRepoTarball(tarballFilePath, destinationDir, tarballSubdir)
   // save history
   updateHistoryItem({
