@@ -4,6 +4,7 @@ import { type TemplateItem, getConfig } from '../config'
 import { type HistoryItem, getHistory } from '../history'
 import { printSuccess } from '../printer'
 import { timeDifference } from '../utils'
+import type { Options } from '../options'
 import { handlerLocal } from './local'
 import { handlerNPM } from './npm'
 import { handlerGitHub } from './github'
@@ -16,7 +17,7 @@ function getInitialDestinationDir(templateName: string) {
   return match.groups?.subdir ? basename(match.groups.subdir) : match.groups!.repoName
 }
 
-async function selectGitHubTemplate(history: HistoryItem[]) {
+async function selectGitHubTemplate(history: HistoryItem[], options: Options) {
   const gitHubHistory = history.filter(item => item.type === 'github').sort((a, b) => b.timestamp - a.timestamp)
   const choices = gitHubHistory.map(item => ({ title: item.templateName, value: item.templateName, description: `Last used: ${timeDifference(item.timestamp)}` }))
 
@@ -34,10 +35,10 @@ async function selectGitHubTemplate(history: HistoryItem[]) {
     initial: getInitialDestinationDir(templateName),
   })
 
-  handlerGitHub(templateName, destinationDir)
+  handlerGitHub(templateName, destinationDir, options)
 }
 
-async function selectNPMTemplate(history: HistoryItem[]) {
+async function selectNPMTemplate(history: HistoryItem[], options: Options) {
   const npmHistory = history.filter(item => item.type === 'npm').sort((a, b) => b.timestamp - a.timestamp)
   const choices = npmHistory.map(item => ({ title: item.templateName, value: item.templateName, description: `Last used: ${timeDifference(item.timestamp)}` }))
 
@@ -55,10 +56,10 @@ async function selectNPMTemplate(history: HistoryItem[]) {
     initial: getInitialDestinationDir(templateName),
   })
 
-  handlerNPM(templateName, destinationDir)
+  handlerNPM(templateName, destinationDir, options)
 }
 
-async function selectLocalTemplate(history: HistoryItem[], localTemplates: TemplateItem[]) {
+async function selectLocalTemplate(history: HistoryItem[], localTemplates: TemplateItem[], options: Options) {
   const localHistory = history.filter(item => item.type === 'local').sort((a, b) => b.timestamp - a.timestamp)
   const choices = []
   const historySet = new Set(localHistory.map(item => item.templateName))
@@ -80,17 +81,17 @@ async function selectLocalTemplate(history: HistoryItem[], localTemplates: Templ
     initial: getInitialDestinationDir(templateName),
   })
 
-  handlerLocal(templateName, localTemplates.find(item => item.name === templateName)!.path, destinationDir)
+  handlerLocal(templateName, localTemplates.find(item => item.name === templateName)!.path, destinationDir, options)
 }
 
-export async function handlerCli() {
+export async function handlerCli(options: Options) {
   const localTemplates = (await getConfig()).localTemplates || []
   const history = (await getHistory()) || []
 
   if (localTemplates.length === 0 && history.length === 0)
     throw new Error('No local templates or history found')
 
-  printSuccess('No template name provided, running CLI to choose template from history\n')
+  printSuccess('No template name provided, running CLI to choose template from history')
 
   const typeChoices = []
   if (history.length && history.some(item => item.type === 'npm'))
@@ -107,13 +108,13 @@ export async function handlerCli() {
   })
   switch (type) {
     case 'github':
-      selectGitHubTemplate(history)
+      selectGitHubTemplate(history, options)
       break
     case 'npm':
-      selectNPMTemplate(history)
+      selectNPMTemplate(history, options)
       break
     case 'local':
-      selectLocalTemplate(history, localTemplates)
+      selectLocalTemplate(history, localTemplates, options)
       break
   }
 }

@@ -3,9 +3,15 @@ import { execa } from 'execa'
 import { printSuccess } from '../printer'
 import { getConfig } from '../config'
 import { updateHistoryItem } from '../history'
+import { type Options, defaultOptions } from '../options'
+import { isDirEmpty } from '../utils'
 
-export async function handlerNPM(templateName: string, destinationDir: string) {
-  printSuccess(`Creating project from NPM template: ${templateName}\n`)
+export async function handlerNPM(templateName: string, destinationDir: string, options: Options = defaultOptions) {
+  printSuccess(`Creating project from NPM template: ${templateName}`)
+
+  if (!options.force && !isDirEmpty(destinationDir))
+    throw new Error('Destination directory is not empty, use --force to override')
+
   destinationDir = destinationDir || templateName
   let agent = (await getConfig()).agent
   if (!agent || !['npm', 'pnpm', 'yarn', 'bun'].includes(agent)) {

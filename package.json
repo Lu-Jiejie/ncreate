@@ -53,6 +53,7 @@
   "dependencies": {
     "execa": "^9.0.2",
     "https-proxy-agent": "^7.0.4",
+    "minimist": "^1.2.8",
     "picocolors": "^1.0.0",
     "playground": "link:D:/CODE/mine/ncreate/playground",
     "prompts-plus": "^3.0.4",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.17.0",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20.12.11",
     "bumpp": "^9.4.1",
     "eslint": "^8.57.0",

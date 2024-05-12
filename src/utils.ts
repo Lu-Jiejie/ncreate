@@ -1,5 +1,5 @@
 import https from 'node:https'
-import { accessSync, copyFile, createWriteStream, mkdirSync, readdir, stat } from 'node:fs'
+import { accessSync, copyFile, createWriteStream, mkdirSync, readdir, readdirSync, stat } from 'node:fs'
 import { join } from 'node:path'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 
@@ -27,7 +27,7 @@ export function fetchFile(url: string, path: string, options: { proxy?: string }
   })
 }
 
-export function copyFolderToFolder(sourceDir: string, destinationDir: string, exclude: string[] = []) {
+export function copyDir(sourceDir: string, destinationDir: string, exclude: string[] = []) {
   return new Promise((resolve, reject) => {
     // if destination isn't exist, create it
     try {
@@ -54,7 +54,7 @@ export function copyFolderToFolder(sourceDir: string, destinationDir: string, ex
               rejectFile(err)
 
             if (stats.isDirectory()) {
-              copyFolderToFolder(sourceFilePath, destinationFilePath)
+              copyDir(sourceFilePath, destinationFilePath)
                 .then(resolveFile)
                 .catch(rejectFile)
             }
@@ -71,6 +71,10 @@ export function copyFolderToFolder(sourceDir: string, destinationDir: string, ex
       })).then(resolve).catch(reject)
     })
   })
+}
+
+export function isDirEmpty(dir: string) {
+  return readdirSync(dir).length === 0
 }
 
 export function timeDifference(from: number, to: number = Date.now()) {

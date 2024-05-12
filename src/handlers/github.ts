@@ -4,9 +4,10 @@ import { env } from 'node:process'
 import { execaCommand } from 'execa'
 import * as tar from 'tar'
 import { CACHE_DIR } from '../constants'
-import { fetchFile } from '../utils'
+import { fetchFile, isDirEmpty } from '../utils'
 import { printSuccess } from '../printer'
 import { updateHistoryItem } from '../history'
+import { type Options, defaultOptions } from '../options'
 
 interface RepoInfo {
   author: string
@@ -110,8 +111,12 @@ function unpackRepoTarball(tarballFilePath: string, destinationDir: string, tarb
   }, tarballSubdir ? [tarballSubdir] : [])
 }
 
-export async function handlerGitHub(templateName: string, destinationDir: string) {
-  printSuccess(`Creating project from GitHub template: ${templateName}\n`)
+export async function handlerGitHub(templateName: string, destinationDir: string, options: Options = defaultOptions) {
+  printSuccess(`Creating project from GitHub template: ${templateName}`)
+
+  if (!isDirEmpty(destinationDir) && !options.force)
+    throw new Error('Destination directory is not empty, use --force to override')
+
   const repoInfo = parseRepoInfo(templateName)
   const { tarballFilePath, tarballSubdir } = await getRepoTarball(repoInfo, CACHE_DIR)
   // if destination is not provided, use the subdir or repo name
