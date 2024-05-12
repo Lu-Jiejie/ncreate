@@ -27,7 +27,7 @@ export function fetchFile(url: string, path: string, options: { proxy?: string }
   })
 }
 
-export function copyFolderFiles(sourceDir: string, destinationDir: string, exclude: string[] = []) {
+export function copyFolderToFolder(sourceDir: string, destinationDir: string, exclude: string[] = []) {
   return new Promise((resolve, reject) => {
     // if destination isn't exist, create it
     try {
@@ -54,7 +54,7 @@ export function copyFolderFiles(sourceDir: string, destinationDir: string, exclu
               rejectFile(err)
 
             if (stats.isDirectory()) {
-              copyFolderFiles(sourceFilePath, destinationFilePath)
+              copyFolderToFolder(sourceFilePath, destinationFilePath)
                 .then(resolveFile)
                 .catch(rejectFile)
             }
@@ -71,4 +71,23 @@ export function copyFolderFiles(sourceDir: string, destinationDir: string, exclu
       })).then(resolve).catch(reject)
     })
   })
+}
+
+export function timeDifference(from: number, to: number = Date.now()) {
+  const msPerMinute = 60 * 1000
+  const msPerHour = msPerMinute * 60
+  const msPerDay = msPerHour * 24
+  const msPerMonth = msPerDay * 30
+  const msPerYear = msPerDay * 365
+
+  const elapsed = to - from
+
+  if (elapsed < msPerDay)
+    return '⩽1d'
+  else if (elapsed < msPerMonth)
+    return `~${Math.round(elapsed / msPerDay)}d`
+  else if (elapsed < msPerYear)
+    return `~${Math.round(elapsed / msPerMonth)}mo`
+  else
+    return `~${+(elapsed / msPerYear).toFixed(1)}y`
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import pc from 'picocolors'
 import { name, version } from '../package.json'
 

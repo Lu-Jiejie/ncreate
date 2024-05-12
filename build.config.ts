@@ -3,11 +3,11 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
   entries: [
     'src/index',
-    'src/runner'
+    'src/runner',
   ],
   declaration: true,
   clean: true,
   rollup: {
-    emitCJS: true
-  }
+    emitCJS: true,
+  },
 })

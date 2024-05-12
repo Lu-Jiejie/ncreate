@@ -4,48 +4,51 @@ import { handlerNPM } from './handlers/npm'
 import { handlerGitHub } from './handlers/github'
 import { getConfig } from './config'
 import { handlerLocal } from './handlers/local'
+import { handlerCli } from './handlers/cli'
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
   printError(error.message)
 })
 
-async function run(args: string[]) {
-  if (args.length === 0)
-    throw new Error('No Template Name Provided')
+async function runner(args: string[]) {
+  // if no template name provided, run cli to choose template from history
+  if (args.length === 0) {
+    await handlerCli()
+    return
+  }
 
-  if (args.length === 1 && (args[0].toLowerCase() === '-v' || args[0] === '--version')) {
+  if (args.includes('-v') || args.includes('-V') || args.includes('--version')) {
     printVersion()
     return
   }
 
-  if (args.length === 1 && (args[0].toLowerCase() === '-h' || args[0] === '--help')) {
+  if (args.includes('-h') || args.includes('--help')) {
     printHelp()
     return
   }
 
-  const config = await getConfig()
-  const localTemplates = config.localTemplates || []
+  const localTemplates = (await getConfig()).localTemplates || []
   const templateName = args[0]
-  const destination = args[1]
+  const destinationDir = args[1]
 
   // if local template
   const localIndex = localTemplates.findIndex(template => template.name === templateName)
   if (localIndex !== -1) {
     const templatePath = localTemplates[localIndex].path
-    handlerLocal(templateName, templatePath, destination)
+    handlerLocal(templateName, templatePath, destinationDir)
     return
   }
 
   if (templateName.includes('/'))
-    handlerGitHub(templateName, destination)
+    handlerGitHub(templateName, destinationDir)
   else
-    handlerNPM(templateName, destination)
+    handlerNPM(templateName, destinationDir)
 }
 
-function runCli() {
+function run() {
   const args = process.argv.slice(2).filter(Boolean)
-  run(args)
+  runner(args)
 }
 
-runCli()
+run()

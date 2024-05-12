@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { execa, execaCommand } from 'execa'
+import { execaCommand } from 'execa'
 
 describe('should work', () => {
   it('parse repo', () => {
@@ -50,7 +50,7 @@ describe('should work', () => {
         return {
           type: match[1] === 'tags' ? 'tag' : match[1] === 'heads' ? 'branch' : match[1],
           name: match[2],
-          hash
+          hash,
         }
       })
       return refs

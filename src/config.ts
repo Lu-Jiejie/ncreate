@@ -1,12 +1,14 @@
 import { pathToFileURL } from 'node:url'
 import { CONFIG_FILE_PATH } from './constants'
 
+export interface TemplateItem {
+  name: string
+  path: string
+}
+
 export interface Config {
   agent?: string
-  localTemplates?: {
-    name: string
-    path: string
-  }[]
+  localTemplates?: TemplateItem[]
 }
 
 let config: Config

@@ -1,4 +1,4 @@
-import { dirname, join } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import { accessSync, mkdirSync } from 'node:fs'
 import { env } from 'node:process'
 import { execaCommand } from 'execa'
@@ -6,6 +6,7 @@ import * as tar from 'tar'
 import { CACHE_DIR } from '../constants'
 import { fetchFile } from '../utils'
 import { printSuccess } from '../printer'
+import { updateHistoryItem } from '../history'
 
 interface RepoInfo {
   author: string
@@ -22,14 +23,14 @@ interface RepoRef {
 }
 
 function parseRepoInfo(source: string): RepoInfo {
-  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^\/\s]+)\/(?<repoName>[^\/\s#]+)(?<path>(?:\/[^\/\s#]+)+)?(?:\/)?(?:#(?<ref>.+))?/
+  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^\/\s]+)\/(?<repoName>[^\/\s#]+)(?<subdir>(?:\/[^\/\s#]+)+)?(?:\/)?(?:#(?<ref>.+))?/
   const match = regexp.exec(source)
   if (!match)
     throw new Error('Invalid GitHub repository format')
 
   const author = match.groups!.author
   const repoName = match.groups!.repoName
-  const subdir = match.groups?.path || ''
+  const subdir = match.groups?.subdir || ''
   const ref = match.groups?.ref || 'HEAD'
   const url = `https://github.com/${author}/${repoName}`
 
@@ -50,7 +51,7 @@ async function fetchRepoRefs(repoUrl: string): Promise<RepoRef[]> {
     return {
       type: match[1] === 'tags' ? 'tag' : match[1] === 'heads' ? 'branch' : match[1],
       name: match[2],
-      hash
+      hash,
     }
   })
   return refs
@@ -96,24 +97,30 @@ async function getRepoTarball(repoInfo: RepoInfo, cacheDir: string) {
   }
   return {
     tarballFilePath,
-    tarballSubdir: repoInfo.subdir ? `${repoInfo.repoName}-${hash}${repoInfo.subdir}` : undefined
+    tarballSubdir: repoInfo.subdir ? `${repoInfo.repoName}-${hash}${repoInfo.subdir}` : undefined,
   }
 }
 
-function unpackRepoTarball(tarballFilePath: string, destination: string, tarballSubdir?: string) {
-  mkdirSync(destination, { recursive: true })
+function unpackRepoTarball(tarballFilePath: string, destinationDir: string, tarballSubdir?: string) {
+  mkdirSync(destinationDir, { recursive: true })
   return tar.extract({
     file: tarballFilePath,
-    cwd: destination,
-    strip: tarballSubdir ? tarballSubdir.split('/').length : 1
+    cwd: destinationDir,
+    strip: tarballSubdir ? tarballSubdir.split('/').length : 1,
   }, tarballSubdir ? [tarballSubdir] : [])
 }
 
-export async function handlerGitHub(templateName: string, destination: string) {
-  printSuccess(`Creating project from GitHub template: ${templateName}`)
+export async function handlerGitHub(templateName: string, destinationDir: string) {
+  printSuccess(`Creating project from GitHub template: ${templateName}\n`)
   const repoInfo = parseRepoInfo(templateName)
   const { tarballFilePath, tarballSubdir } = await getRepoTarball(repoInfo, CACHE_DIR)
   // if destination is not provided, use the subdir or repo name
-  destination = destination || repoInfo.subdir ? repoInfo.subdir.split('/').pop()! : repoInfo.repoName
-  await unpackRepoTarball(tarballFilePath, destination, tarballSubdir)
+  destinationDir = destinationDir || (repoInfo.subdir ? basename(repoInfo.subdir) : repoInfo.repoName)
+  await unpackRepoTarball(tarballFilePath, destinationDir, tarballSubdir)
+  // save history
+  updateHistoryItem({
+    type: 'github',
+    templateName,
+    timestamp: Date.now(),
+  })
 }
