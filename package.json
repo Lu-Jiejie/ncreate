@@ -61,7 +61,6 @@
     "minimatch": "^9.0.4",
     "minimist": "^1.2.8",
     "picocolors": "^1.0.0",
-    "playground": "link:D:/CODE/mine/ncreate/playground",
     "prompts-plus": "^3.0.4",
     "tar": "^7.1.0"
   },
