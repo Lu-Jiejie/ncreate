@@ -4,6 +4,7 @@ import { CONFIG_FILE_PATH } from './constants'
 export interface TemplateItem {
   name: string
   path: string
+  exclude?: string[]
 }
 
 export interface Config {

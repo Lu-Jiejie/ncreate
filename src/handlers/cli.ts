@@ -81,7 +81,7 @@ async function selectLocalTemplate(history: HistoryItem[], localTemplates: Templ
     initial: getInitialDestinationDir(templateName),
   })
 
-  handlerLocal(templateName, localTemplates.find(item => item.name === templateName)!.path, destinationDir, options)
+  handlerLocal(templateName, destinationDir, options)
 }
 
 export async function handlerCli(options: Options) {

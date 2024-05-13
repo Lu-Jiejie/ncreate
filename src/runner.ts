@@ -36,10 +36,8 @@ async function runner(args: minimist.ParsedArgs) {
   }
 
   // if local template
-  const localIndex = localTemplates.findIndex(template => template.name === templateName)
-  if (localIndex !== -1) {
-    const templatePath = localTemplates[localIndex].path
-    handlerLocal(templateName, templatePath, destinationDir, options)
+  if (localTemplates.findIndex(template => template.name === templateName) !== -1) {
+    handlerLocal(templateName, destinationDir, options)
     return
   }
 

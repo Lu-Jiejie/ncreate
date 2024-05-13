@@ -11,9 +11,15 @@ importers:
       execa:
         specifier: ^9.0.2
         version: 9.0.2
+      gitignore-to-minimatch:
+        specifier: ^0.0.1
+        version: 0.0.1
       https-proxy-agent:
         specifier: ^7.0.4
         version: 7.0.4
+      minimatch:
+        specifier: ^9.0.4
+        version: 9.0.4
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -1483,6 +1489,9 @@ packages:
   giget@1.2.1:
     resolution: {integrity: sha512-4VG22mopWtIeHwogGSy1FViXVo0YT+m6BrqZfz0JJFwbSsePsCdOzdLIIli5BtMp7Xe8f/o2OmBpQX2NBOC24g==}
     hasBin: true
+
+  gitignore-to-minimatch@0.0.1:
+    resolution: {integrity: sha512-wgDoHHC/plf/4mDp6JGmYCA3KjZkZcIatoO/U7DNJSmkp+Ct3YlUOi5s/ewpcpcR3dYOjT9kVsyCvpSF1KeZGA==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -4028,7 +4037,7 @@ snapshots:
       eslint-import-resolver-node: 0.3.9
       get-tsconfig: 4.7.3
       is-glob: 4.0.3
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
@@ -4076,7 +4085,7 @@ snapshots:
       get-tsconfig: 4.7.3
       globals: 15.2.0
       ignore: 5.3.1
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       semver: 7.6.0
 
   eslint-plugin-no-only-tests@3.1.0: {}
@@ -4085,7 +4094,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/utils': 7.2.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       natural-compare-lite: 1.4.0
     optionalDependencies:
       vue-eslint-parser: 9.4.2(eslint@8.57.0)
@@ -4396,6 +4405,8 @@ snapshots:
       pathe: 1.1.2
       tar: 6.2.0
 
+  gitignore-to-minimatch@0.0.1: {}
+
   glob-parent@5.1.2:
     dependencies:
       is-glob: 4.0.3
@@ -4408,7 +4419,7 @@ snapshots:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       minipass: 7.1.1
       path-scurry: 1.11.0
 

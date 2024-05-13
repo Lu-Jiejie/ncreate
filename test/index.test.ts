@@ -1,5 +1,9 @@
+import { pathToFileURL } from 'node:url'
+import { readFile } from 'node:fs/promises'
 import { describe, expect, it } from 'vitest'
 import { execaCommand } from 'execa'
+import { minimatch } from 'minimatch'
+import { gitignoreToMinimatch } from 'gitignore-to-minimatch'
 
 describe('should work', () => {
   it('parse repo', () => {
@@ -158,6 +162,56 @@ describe('should work', () => {
           "name": "v1.0.2^{}",
           "type": "tag",
         },
+      ]
+    `)
+  })
+
+  it('match path', () => {
+    const match = (path: string, exclude: string[]) => {
+      const positive = exclude.filter(e => !e.startsWith('!'))
+      const negative = exclude.filter(e => e.startsWith('!')).map(e => e.slice(1))
+      return positive.some(e => minimatch(path, e)) && !negative.some(e => minimatch(path, e))
+    }
+    const gitignore = [
+      '*.txt',
+      '!hello.txt',
+    ]
+    const minimatchPatterns = gitignore.map(gitignoreToMinimatch).flat()
+    expect(minimatchPatterns).toMatchInlineSnapshot(`
+      [
+        "/**/*.txt",
+        "/**/*.txt/**",
+        "!/**/hello.txt",
+        "!/**/hello.txt/**",
+      ]
+    `)
+
+    expect(match('/bar.txt', minimatchPatterns)).toBe(true)
+    expect(match('/hello.txt', minimatchPatterns)).toBe(false)
+    expect(match('/foo/bar.txt', minimatchPatterns)).toBe(true)
+    expect(match('/foo/hello.txt', minimatchPatterns)).toBe(false)
+  })
+  it.only('load gitignore', async () => {
+    let gitignore: string[] = []
+    try {
+      gitignore = (await readFile('D:\\CODE\\mine\\template\\ts-starter\\.gitignore', 'utf-8')).split('\n').map(l => l.trim()).filter(Boolean)
+    }
+    catch (error) {
+      gitignore = []
+    }
+    expect(gitignore).toMatchInlineSnapshot(`
+      [
+        ".cache",
+        ".DS_Store",
+        ".idea",
+        "*.log",
+        "*.tgz",
+        "coverage",
+        "dist",
+        "lib-cov",
+        "logs",
+        "node_modules",
+        "temp",
       ]
     `)
   })
