@@ -3,16 +3,20 @@
   "type": "module",
   "version": "0.0.0",
   "packageManager": "pnpm@9.1.0",
-  "description": "some description...",
-  "author": "LU-JIEJIE",
+  "description": "Create your new project from a NPM, GitHub or local template with a single command.",
+  "author": "Lu-Jiejie",
   "license": "MIT",
-  "homepage": "https://github.com/LU-JIEJIE/ncreate#readme",
+  "homepage": "https://github.com/Lu-Jiejie/ncreate#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LU-JIEJIE/ncreate.git"
+    "url": "git+https://github.com/Lu-Jiejie/ncreate.git"
   },
-  "bugs": "https://github.com/LU-JIEJIE/ncreate/issues",
-  "keywords": [],
+  "bugs": "https://github.com/Lu-Jiejie/ncreate/issues",
+  "keywords": [
+    "cli",
+    "create",
+    "NPM"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
