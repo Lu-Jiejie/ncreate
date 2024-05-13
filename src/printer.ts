@@ -8,6 +8,19 @@ export function printVersion() {
 
 export function printHelp() {
   console.log(`${pc.bold(pc.green(name))} ${pc.green(`v${version}`)}`)
+  console.log('')
+  console.log('Usage:')
+  console.log(`  $ ncreate                              ${pc.gray('- Start the interactive mode')}`)
+  console.log(`  $ ncreate <template> [<destination>]   ${pc.gray('- Create a new project from a template')}`)
+  console.log('')
+  console.log('Template Types:')
+  console.log(`  ${'npm'}     ${pc.gray('- An npm template')}`)
+  console.log(`          ${pc.gray('  E.g. $ ncreate vue@latest my-vue-app')}`)
+  console.log(`  ${'github'}  ${pc.gray('- A GitHub repositorys')}`)
+  console.log(`          ${pc.gray('  E.g. $ ncreate XXXX/ts-starter my-ts-app')}`)
+  console.log(`  ${'local'}   ${pc.gray('- A local directory you have set up as a template')}`)
+  console.log('')
+  console.log(pc.yellow('Check https://github.com/Lu-Jiejie/ncreate for more information.'))
 }
 
 export function printError(errorMessage: string, errorType: string = 'ERROR') {
