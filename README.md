@@ -1,6 +1,9 @@
 # ncreate
 
-[![NPM Version](https://img.shields.io/npm/v/ncreate?style=flat&color=ccc)](https://www.npmjs.com/package/ncreate)
+[![npm version][npm-version-badge]][npm-version-href]
+[![minzip][minzip-badge]][minizip-href]
+[![jsdocs][jsdocs-badge]][jsdocs-href]
+[![license][license-badge]][license-href]
 
 `npm create` or `git clone && rimraf .git` => `ncreate`
 
@@ -91,3 +94,13 @@ You can configure some options in `~/.ncreate/config.json`.
 `bun create` from [bun](https://bun.sh/docs/cli/bun-create)
 
 ~~But `bun create` is terrible on Windows.~~
+
+<!-- Badge -->
+[npm-version-badge]: https://img.shields.io/npm/v/ncreate?style=flat&color=ddd&labelColor=444
+[npm-version-href]: https://www.npmjs.com/package/ncreate
+[minzip-badge]: https://img.shields.io/bundlephobia/minzip/ncreate?style=flat&color=ddd&labelColor=444&label=minizip
+[minizip-href]: https://bundlephobia.com/result?p=ncreate
+[jsdocs-badge]: https://img.shields.io/badge/jsDocs-reference-ddd?style=flat&color=ddd&labelColor=444
+[jsdocs-href]: https://www.jsdocs.io/package/ncreate
+[license-badge]: https://img.shields.io/github/license/Lu-Jiejie/ncreate?style=flat&color=ddd&labelColor=444
+[license-href]: https://github.com/Lu-Jiejie/ncreate/blob/main/LICENSE
