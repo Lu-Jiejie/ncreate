@@ -13,7 +13,7 @@ export function fetchFile(url: string, path: string, options: { proxy?: string }
         reject(new Error(`Failed to fetch file: ${code}`))
       }
       else if (code >= 300) {
-        fetchFile(res.headers.location!, path, options)
+        fetchFile(res.headers.location!, path, options).then(resolve).catch(reject)
       }
       else {
         const file = createWriteStream(path)
