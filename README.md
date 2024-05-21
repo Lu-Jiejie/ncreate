@@ -42,9 +42,9 @@ The way to create a project from a GitHub template refers to [degit](https://git
 It means that you can `ncreate` a GitHub template with a spcific branch, tag or commit hash. Like:
 
 ```
-ncreate Lu-Jiejie/ts-starter#main my-vitesse-app
+ncreate Lu-Jiejie/ts-starter#main my-ts-app
 
-ncreate Lu-Jiejie/ts-starter#9d73fe3 my-vitesse-app
+ncreate Lu-Jiejie/ts-starter#9d73fe3 my-ts-app
 ```
 
 All the GitHub templates will be cached in `~/.ncreate/github` by default, for the sake of speed.
