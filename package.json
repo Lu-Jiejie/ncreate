@@ -1,7 +1,7 @@
 {
   "name": "ncreate",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "packageManager": "pnpm@9.1.1",
   "description": "Create your new project from a NPM, GitHub or local template with a single command.",
   "author": "Lu-Jiejie",
@@ -61,8 +61,7 @@
     "minimatch": "^9.0.4",
     "minimist": "^1.2.8",
     "picocolors": "^1.0.0",
-    "prompts-plus": "^3.0.4",
-    "tar": "^7.1.0"
+    "prompts-plus": "^3.0.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.17.0",
@@ -73,6 +72,7 @@
     "esno": "^4.7.0",
     "lint-staged": "^15.2.2",
     "simple-git-hooks": "^2.11.1",
+    "tar": "^7.1.0",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.6"
