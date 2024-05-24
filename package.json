@@ -63,6 +63,7 @@
     "esno": "^4.7.0",
     "execa": "^9.1.0",
     "gitignore-to-minimatch": "^0.0.1",
+    "https-proxy-agent": "^7.0.4",
     "lint-staged": "^15.2.2",
     "minimatch": "^9.0.4",
     "minimist": "^1.2.8",
