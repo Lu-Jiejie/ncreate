@@ -1,5 +1,5 @@
-import https from 'node:https'
 import { accessSync, copyFile, createWriteStream, mkdirSync, readdir, readdirSync, stat } from 'node:fs'
+import https from 'node:https'
 import { join } from 'node:path'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { minimatch } from 'minimatch'
@@ -43,7 +43,7 @@ export function copyDir(sourceDir: string, destinationDir: string, exclude: stri
       try {
         accessSync(destinationDir)
       }
-      catch (error) {
+      catch {
         mkdirSync(destinationDir, { recursive: true })
       }
 
@@ -92,7 +92,7 @@ export function isDirEmpty(dir: string) {
   try {
     return readdirSync(dir).length === 0
   }
-  catch (error) {
+  catch {
     return true
   }
 }

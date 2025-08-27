@@ -13,7 +13,7 @@ export async function getHistory() {
     const history: HistoryItem[] = (await import(pathToFileURL(HISTORY_FILE_PATH).href)).history
     return history
   }
-  catch (error) {
+  catch {
     return []
   }
 }

@@ -1,14 +1,9 @@
 import antfu from '@antfu/eslint-config'
 
-export default antfu(
-  {
-    ignores: [
-      // eslint ignore globs here
-    ],
-  },
-  {
-    rules: {
-      // override rules here
-    },
-  },
+export default antfu({
+
+}).removeRules(
+  'regexp/no-unused-capturing-group',
+  'regexp/no-misleading-capturing-group',
+  'test/no-only-tests',
 )

@@ -1,16 +1,18 @@
+import type { TemplateItem } from '../config'
+import type { HistoryItem } from '../history'
+import type { Options } from '../options'
 import { basename } from 'node:path'
 import prompts from 'prompts-plus'
-import { type TemplateItem, getConfig } from '../config'
-import { type HistoryItem, getHistory } from '../history'
+import { getConfig } from '../config'
+import { getHistory } from '../history'
 import { printSuccess } from '../printer'
 import { timeDifference } from '../utils'
-import type { Options } from '../options'
+import { handlerGitHub } from './github'
 import { handlerLocal } from './local'
 import { handlerNPM } from './npm'
-import { handlerGitHub } from './github'
 
 function getInitialDestinationDir(templateName: string) {
-  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^\/\s]+)\/(?<repoName>[^\/\s#]+)(?<path>(?:\/[^\/\s#]+)+)?(?:\/)?(?:#(?<ref>.+))?/
+  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^/\s]+)\/(?<repoName>[^/\s#]+)(?<path>(?:\/[^/\s#]+)+)?\/?(?:#(?<ref>.+))?/
   const match = regexp.exec(templateName)
   if (!match)
     return templateName

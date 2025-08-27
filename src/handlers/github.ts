@@ -1,13 +1,14 @@
-import { basename, dirname, join } from 'node:path'
+import type { Options } from '../options'
 import { accessSync, mkdirSync } from 'node:fs'
+import { basename, dirname, join } from 'node:path'
 import { env } from 'node:process'
 import { execaCommand } from 'execa'
 import * as tar from 'tar'
 import { CACHE_DIR } from '../constants'
-import { fetchFile, isDirEmpty } from '../utils'
-import { printSuccess } from '../printer'
 import { updateHistoryItem } from '../history'
-import { type Options, defaultOptions } from '../options'
+import { defaultOptions } from '../options'
+import { printSuccess } from '../printer'
+import { fetchFile, isDirEmpty } from '../utils'
 
 interface RepoInfo {
   author: string
@@ -24,7 +25,7 @@ interface RepoRef {
 }
 
 function parseRepoInfo(source: string): RepoInfo {
-  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^\/\s]+)\/(?<repoName>[^\/\s#]+)(?<subdir>(?:\/[^\/\s#]+)+)?(?:\/)?(?:#(?<ref>.+))?/
+  const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^/\s]+)\/(?<repoName>[^/\s#]+)(?<subdir>(?:\/[^/\s#]+)+)?\/?(?:#(?<ref>.+))?/
   const match = regexp.exec(source)
   if (!match)
     throw new Error('Invalid GitHub repository format')
@@ -92,7 +93,7 @@ async function getRepoTarball(repoInfo: RepoInfo, cacheDir: string) {
   try {
     accessSync(tarballFilePath)
   }
-  catch (error) {
+  catch {
     mkdirSync(dirname(tarballFilePath), { recursive: true })
     await fetchRepoTarball(tarballUrl, tarballFilePath)
   }

@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises'
-import { describe, expect, it } from 'vitest'
 import { execaCommand } from 'execa'
-import { minimatch } from 'minimatch'
 import { gitignoreToMinimatch } from 'gitignore-to-minimatch'
+import { minimatch } from 'minimatch'
+import { describe, expect, it } from 'vitest'
 
 describe('should work', () => {
   it('parse repo', () => {
-    const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^\/\s]+)\/(?<name>[^\/\s#]+)(?<path>(?:\/[^\/\s#]+)+)?(?:\/)?(?:#(?<ref>.+))?/
+    const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^/\s]+)\/(?<name>[^/\s#]+)(?<path>(?:\/[^/\s#]+)+)?\/?(?:#(?<ref>.+))?/
     expect(regexp.exec('github.com/lu-jiejie/ts-starter')?.groups).toMatchInlineSnapshot(`
       {
         "author": "lu-jiejie",
@@ -195,7 +195,7 @@ describe('should work', () => {
     try {
       gitignore = (await readFile('D:\\CODE\\mine\\template\\ts-starter\\.gitignore', 'utf-8')).split('\n').map(l => l.trim()).filter(Boolean)
     }
-    catch (error) {
+    catch {
       gitignore = []
     }
     expect(gitignore).toMatchInlineSnapshot(`

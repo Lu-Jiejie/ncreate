@@ -1,9 +1,10 @@
-import prompts from 'prompts-plus'
+import type { Options } from '../options'
 import { execa } from 'execa'
-import { printSuccess } from '../printer'
+import prompts from 'prompts-plus'
 import { getConfig } from '../config'
 import { updateHistoryItem } from '../history'
-import { type Options, defaultOptions } from '../options'
+import { defaultOptions } from '../options'
+import { printSuccess } from '../printer'
 import { isDirEmpty } from '../utils'
 
 export async function handlerNPM(templateName: string, destinationDir: string, options: Options = defaultOptions) {

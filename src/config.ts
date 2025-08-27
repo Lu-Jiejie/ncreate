@@ -19,7 +19,7 @@ export async function getConfig() {
       const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
       config = rawConfig.default
     }
-    catch (error) {
+    catch {
       config = {}
     }
   }

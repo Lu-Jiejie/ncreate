@@ -1,11 +1,12 @@
+import type { Options } from '../options'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { gitignoreToMinimatch } from 'gitignore-to-minimatch'
+import { getConfig } from '../config'
 import { updateHistoryItem } from '../history'
-import { type Options, defaultOptions } from '../options'
+import { defaultOptions } from '../options'
 import { printSuccess } from '../printer'
 import { copyDir, isDirEmpty } from '../utils'
-import { getConfig } from '../config'
 
 export async function handlerLocal(templateName: string, destinationDir: string, options: Options = defaultOptions) {
   printSuccess(`Creating project from local template: ${templateName}`)
@@ -27,7 +28,7 @@ export async function handlerLocal(templateName: string, destinationDir: string,
     try {
       exclude = (await readFile(join(template.path, '.gitignore'), 'utf-8')).split('\n').map(l => l.trim()).filter(Boolean)
     }
-    catch (error) {
+    catch {
       exclude = []
     }
   }
