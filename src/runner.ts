@@ -1,12 +1,12 @@
+import type { Options } from './options'
 import process from 'node:process'
 import minimist from 'minimist'
-import { printError, printHelp, printVersion } from './printer'
-import { handlerNPM } from './handlers/npm'
-import { handlerGitHub } from './handlers/github'
 import { getConfig } from './config'
-import { handlerLocal } from './handlers/local'
 import { handlerCli } from './handlers/cli'
-import type { Options } from './options'
+import { handlerGitHub } from './handlers/github'
+import { handlerLocal } from './handlers/local'
+import { handlerNPM } from './handlers/npm'
+import { printError, printHelp, printVersion } from './printer'
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
