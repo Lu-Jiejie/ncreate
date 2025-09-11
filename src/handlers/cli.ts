@@ -2,7 +2,8 @@ import type { TemplateItem } from '../config'
 import type { HistoryItem } from '../history'
 import type { Options } from '../options'
 import { basename } from 'node:path'
-import prompts from 'prompts-plus'
+import process from 'node:process'
+import rawPrompts from 'prompts-plus'
 import { getConfig } from '../config'
 import { getHistory } from '../history'
 import { printSuccess } from '../printer'
@@ -10,6 +11,12 @@ import { timeDifference } from '../utils'
 import { handlerGitHub } from './github'
 import { handlerLocal } from './local'
 import { handlerNPM } from './npm'
+
+function prompts<T>(questions: rawPrompts.PromptObject) {
+  return rawPrompts<T>(questions, {
+    onCancel: () => { process.exit(0) },
+  })
+}
 
 function getInitialDestinationDir(templateName: string) {
   const regexp = /^(?:(?:https:\/\/)?github.com\/)?(?<author>[^/\s]+)\/(?<repoName>[^/\s#]+)(?<path>(?:\/[^/\s#]+)+)?\/?(?:#(?<ref>.+))?/
@@ -87,7 +94,7 @@ async function selectLocalTemplate(history: HistoryItem[], localTemplates: Templ
 }
 
 export async function handlerCli(options: Options) {
-  const localTemplates = (await getConfig()).localTemplates || []
+  const localTemplates = (getConfig()).localTemplates || []
   const history = (await getHistory()) || []
 
   if (localTemplates.length === 0 && history.length === 0)
