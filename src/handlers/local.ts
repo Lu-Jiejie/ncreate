@@ -14,7 +14,7 @@ export async function handlerLocal(templateName: string, destinationDir: string,
   if (!options.force && !isDirEmpty(destinationDir))
     throw new Error('Destination directory is not empty, use --force to override')
 
-  const config = await getConfig()
+  const config = getConfig()
   const template = config.localTemplates?.find(t => t.name === templateName)
   destinationDir = destinationDir || templateName
   if (!template?.path)

@@ -1,5 +1,7 @@
-import { pathToFileURL } from 'node:url'
+import { createRequire } from 'node:module'
 import { CONFIG_FILE_PATH } from './constants'
+
+const require = createRequire(import.meta.url)
 
 export interface TemplateItem {
   name: string
@@ -12,15 +14,16 @@ export interface Config {
   localTemplates?: TemplateItem[]
 }
 
-let config: Config
-export async function getConfig() {
+let config: Config | null = null
+export function getConfig() {
   if (!config) {
     try {
-      const rawConfig = await import(pathToFileURL(CONFIG_FILE_PATH).href)
-      config = rawConfig.default
+      const rawConfig = require(CONFIG_FILE_PATH)
+      config = rawConfig && typeof rawConfig === 'object' ? rawConfig as Config : {}
     }
-    catch {
+    catch (error) {
       config = {}
+      console.error('Error loading config:', error)
     }
   }
   return config

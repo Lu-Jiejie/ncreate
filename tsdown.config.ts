@@ -5,7 +5,7 @@ export default defineConfig({
     'src/index.ts',
     'src/runner.ts',
   ],
-  format: ['cjs', 'esm'],
-  dts: true,
+  format: ['esm'],
+  dts: false,
   clean: true,
 })
