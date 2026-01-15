@@ -8,4 +8,5 @@ export default defineConfig({
   format: ['esm'],
   dts: false,
   clean: true,
+  exports: true,
 })
