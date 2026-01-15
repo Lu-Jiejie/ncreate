@@ -47,7 +47,7 @@
     "cli": "tsx src/runner.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "nr build",
+    "prepublishOnly": "pnpm run build",
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
