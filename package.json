@@ -46,7 +46,7 @@
     "dev": "tsdown --watch",
     "build": "tsdown",
     "lint": "eslint .",
-    "release": "bumpp && npm publish",
+    "release": "bumpp",
     "start": "tsx src/index.ts",
     "cli": "tsx src/runner.ts",
     "test": "vitest",
