@@ -6,7 +6,7 @@ export default defineConfig({
     'src/runner.ts',
   ],
   format: ['esm'],
-  dts: false,
+  dts: true,
   clean: true,
   exports: true,
 })

@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 'use strict'
-import '../dist/runner.js'
+import '../dist/runner.mjs'
